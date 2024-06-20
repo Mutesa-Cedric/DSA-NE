@@ -1,4 +1,5 @@
 #include <iostream>
+#include <limits>
 
 using namespace std;
 
@@ -260,9 +261,12 @@ int main() {
 
         // receive user choice
         cout << "Enter your choice: ";
-        cin >> choice;
-        cin.ignore();
-        cout << "\n";
+        while (!(cin >> choice)) {
+            cout << "Invalid input! Please enter a number: ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+
 
         if (choice == 1) {
             int patient_id;
@@ -274,8 +278,13 @@ int main() {
 
             ask_p_id:
             cout << "ID: ";
-            cin >> patient_id;
+            while (!(cin >> patient_id)) {
+                cout << "Invalid input! Please enter a number: ";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
             cin.ignore();
+            
             //check if a patient with that id already exists
             if (patientsList.findById(patient_id)) {
                 cout << "Patient with that id already exists!" << endl;
@@ -302,14 +311,18 @@ int main() {
             cout << "DOCTOR REGISTRATION" << endl;
             cout << "---------------------------" << endl;
 
-            ask_doctor_id:
+            ask_id:
             cout << "ID: ";
-            cin >> doctor_id;
+            while (!(cin >> doctor_id)) {
+                cout << "Invalid input! Please enter a number: ";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
             cin.ignore();
             //check if doctor with that id already exists
             if (doctorsList.findById(doctor_id)) {
                 cout << "Doctor with that id already exists" << endl;
-                goto ask_doctor_id;
+                goto ask_id;
             }
             cout << "NAME: ";
             getline(cin, name);
@@ -328,7 +341,11 @@ int main() {
 
             ask_appointment_id:
             cout << "ID: ";
-            cin >> appointment_id;
+            while (!(cin >> appointment_id)) {
+                cout << "Invalid input! Please enter a number: ";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
             cin.ignore();
             // check if appointment with that id already exists
             if (appointmentsList.findById(appointment_id)) {
@@ -339,7 +356,11 @@ int main() {
             //patient id
             ask_patient_id:
             cout << "P_ID: ";
-            cin >> patient_id;
+            while (!(cin >> patient_id)) {
+                cout << "Invalid input! Please enter a number: ";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
             cin.ignore();
             //find if the patient with that id exists
             if (!patientsList.findById(patient_id)) {
@@ -349,10 +370,14 @@ int main() {
 
             // doctor id
             ask_doctor_Id:
-            cout << "D_ID";
-            cin >> doctor_id;
+            cout << "D_ID: ";
+            while (!(cin >> doctor_id)) {
+                cout << "Invalid input! Please enter a number: ";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
             cin.ignore();
-            //find if the doctor with that id exists
+            //   find if the doctor with that id exists
             if (!doctorsList.findById(doctor_id)) {
                 cout << "Doctor with that id doesn't exist!" << endl;
                 goto ask_doctor_Id;
