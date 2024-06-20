@@ -262,8 +262,8 @@ int main() {
 
         // receive user choice
         cout << "Enter your choice: ";
-        while (!(cin >> choice)) {
-            cout << "Invalid input! Please enter a number: ";
+        while (!(cin >> choice) || choice < 0) {
+            cout << "Invalid input! Please enter a positive number: ";
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
@@ -278,7 +278,7 @@ int main() {
 
             ask_p_id:
             cout << "ID: ";
-            while (!(cin >> patient_id)) {
+            while (!(cin >> patient_id) || patient_id < 0) {
                 cout << "Invalid input! Please enter a number: ";
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -290,19 +290,29 @@ int main() {
                 cout << "Patient with that id already exists!" << endl;
                 goto ask_p_id;
             }
-            
+
             ask_p_name:
             cout << "NAME: ";
             getline(cin, patient_name);
-            if(patient_name.empty()){
-                cout<<"please enter a valid name"<<endl;
+            if (patient_name.empty()) {
+                cout << "please enter a valid name" << endl;
                 goto ask_p_name;
             }
+            ask_p_dob:
             cout << "DoB: ";
             getline(cin, dob);
+            if (dob.empty()) {
+                cout << "Enter a valid dob" << endl;
+                goto ask_p_dob;
+            }
+
+            ask_p_gender:
             cout << "GENDER: ";
             getline(cin, gender);
-
+            if (gender.empty()) {
+                cout << "Enter a valid gender" << endl;
+                goto ask_p_gender;
+            }
             // create a patient object with the given data
             Patient patient = {patient_id, patient_name, dob, gender};
 
@@ -318,8 +328,8 @@ int main() {
 
             ask_id:
             cout << "ID: ";
-            while (!(cin >> doctor_id)) {
-                cout << "Invalid input! Please enter a number: ";
+            while (!(cin >> doctor_id) || doctor_id < 0) {
+                cout << "Invalid input! Please enter a positive number: ";
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
             }
@@ -332,13 +342,17 @@ int main() {
             ask_d_name:
             cout << "NAME: ";
             getline(cin, name);
-            if(name.empty()){
-                cout<<"Please enter a valid name "<<endl;
+            if (name.empty()) {
+                cout << "Please enter a valid name " << endl;
                 goto ask_d_name;
             }
+            ask_specialization:
             cout << "SPECIALIZATION: ";
             getline(cin, specialization);
-
+            if (specialization.empty()) {
+                cout << "Enter a valid specialization" << endl;
+                goto ask_specialization;
+            }
             Doctor doctor = {doctor_id, name, specialization};
             doctorsList.addDoctor(doctor);
         } else if (choice == 3) {
@@ -350,8 +364,8 @@ int main() {
 
             ask_appointment_id:
             cout << "ID: ";
-            while (!(cin >> appointment_id)) {
-                cout << "Invalid input! Please enter a number: ";
+            while (!(cin >> appointment_id) || appointment_id < 0) {
+                cout << "Invalid input! Please enter a positive number: ";
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
             }
@@ -365,8 +379,8 @@ int main() {
             // patient id
             ask_patient_id:
             cout << "P_ID: ";
-            while (!(cin >> patient_id)) {
-                cout << "Invalid input! Please enter a number: ";
+            while (!(cin >> patient_id) || patient_id < 0) {
+                cout << "Invalid input! Please enter a positive number: ";
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
             }
@@ -380,8 +394,8 @@ int main() {
             // doctor id
             ask_doctor_Id:
             cout << "D_ID: ";
-            while (!(cin >> doctor_id)) {
-                cout << "Invalid input! Please enter a number: ";
+            while (!(cin >> doctor_id) || doctor_id < 0) {
+                cout << "Invalid input! Please enter a positve number: ";
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
             }
