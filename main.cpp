@@ -290,9 +290,14 @@ int main() {
                 cout << "Patient with that id already exists!" << endl;
                 goto ask_p_id;
             }
-
+            
+            ask_p_name:
             cout << "NAME: ";
             getline(cin, patient_name);
+            if(patient_name.empty()){
+                cout<<"please enter a valid name"<<endl;
+                goto ask_p_name;
+            }
             cout << "DoB: ";
             getline(cin, dob);
             cout << "GENDER: ";
@@ -324,8 +329,13 @@ int main() {
                 cout << "Doctor with that id already exists" << endl;
                 goto ask_id;
             }
+            ask_d_name:
             cout << "NAME: ";
             getline(cin, name);
+            if(name.empty()){
+                cout<<"Please enter a valid name "<<endl;
+                goto ask_d_name;
+            }
             cout << "SPECIALIZATION: ";
             getline(cin, specialization);
 
