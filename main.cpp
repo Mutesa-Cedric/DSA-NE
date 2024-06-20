@@ -241,6 +241,10 @@ int main() {
     DoctorsLL doctorsList;
     AppointmentsLL appointmentsList;
 
+    cout << "Welcome to Ruhengeri Hospital Healthcare System" << endl;
+    cout << "------------------------------------------------" << endl;
+    cout << endl;
+
     // loop which will keep the program running forever unless exit is selected
     while (true) {
 
@@ -258,6 +262,7 @@ int main() {
         cout << "Enter your choice: ";
         cin >> choice;
         cin.ignore();
+        cout << "\n";
 
         if (choice == 1) {
             int patient_id;
@@ -266,9 +271,17 @@ int main() {
             //receive patients data
             cout << "PATIENT REGISTRATION" << endl;
             cout << "------------------------" << endl;
+
+            ask_p_id:
             cout << "ID: ";
             cin >> patient_id;
             cin.ignore();
+            //check if a patient with that id already exists
+            if (patientsList.findById(patient_id)) {
+                cout << "Patient with that id already exists!" << endl;
+                goto ask_p_id;
+            }
+
             cout << "NAME: ";
             getline(cin, patient_name);
             cout << "DoB: ";
@@ -289,9 +302,15 @@ int main() {
             cout << "DOCTOR REGISTRATION" << endl;
             cout << "---------------------------" << endl;
 
+            ask_doctor_id:
             cout << "ID: ";
             cin >> doctor_id;
             cin.ignore();
+            //check if doctor with that id already exists
+            if (doctorsList.findById(doctor_id)) {
+                cout << "Doctor with that id already exists" << endl;
+                goto ask_doctor_id;
+            }
             cout << "NAME: ";
             getline(cin, name);
             cout << "SPECIALIZATION: ";
@@ -307,15 +326,37 @@ int main() {
             cout << "APPOINTMENT REGISTRATION" << endl;
             cout << "------------------------" << endl;
 
+            ask_appointment_id:
             cout << "ID: ";
             cin >> appointment_id;
             cin.ignore();
+            // check if appointment with that id already exists
+            if (appointmentsList.findById(appointment_id)) {
+                cout << "Appointment with that id already exists" << endl;
+                goto ask_appointment_id;
+            }
+
+            //patient id
+            ask_patient_id:
             cout << "P_ID: ";
             cin >> patient_id;
             cin.ignore();
+            //find if the patient with that id exists
+            if (!patientsList.findById(patient_id)) {
+                cout << "Patient with that id doesn't exist!" << endl;
+                goto ask_patient_id;
+            }
+
+            // doctor id
+            ask_doctor_Id:
             cout << "D_ID";
             cin >> doctor_id;
             cin.ignore();
+            //find if the doctor with that id exists
+            if (!doctorsList.findById(doctor_id)) {
+                cout << "Doctor with that id doesn't exist!" << endl;
+                goto ask_doctor_Id;
+            }
             cout << "DATE: ";
             getline(cin, appointment_date);
 
