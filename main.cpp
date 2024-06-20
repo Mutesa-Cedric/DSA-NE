@@ -3,7 +3,6 @@
 
 using namespace std;
 
-
 // patient, doctor and appointment structures
 struct Patient {
     int patient_id;
@@ -25,7 +24,6 @@ struct Appointment {
     string appointment_date;
 };
 
-
 // Node to store LinkedList item
 // It's generic so that it can be used for any LinkedList type
 template<typename T>
@@ -44,15 +42,16 @@ private:
 public:
     PatientsLL() : head(nullptr) {}
 
-    //find patient by id
+    // find patient by id
     bool findById(int patient_id) {
         bool isFound = false;
         Node<Patient> *current = head;
         while (current != nullptr) {
-            //patient id already exists
+            // patient id already exists
             if (current->data.patient_id == patient_id) {
                 return true;
             }
+            current = current->next;
         }
         return isFound;
     }
@@ -68,7 +67,7 @@ public:
                 head = newPatient;
             } else {
                 Node<Patient> *current = head;
-                //3. move the patient to the end of the linked list
+                // 3. move the patient to the end of the linked list
                 while (current->next != nullptr) {
                     current = current->next;
                 }
@@ -77,14 +76,13 @@ public:
         } else {
             cout << "Patient with that id already exists" << endl;
         }
-
     }
 
     // print patients in PatientsLL to terminal
     void displayPatients() {
         Node<Patient> *current = head;
 
-        //loop over the elements in the linked list
+        // loop over the elements in the linked list
         while (current != nullptr) {
             cout << "Patient ID: " << current->data.patient_id << ", " << "Name: " << current->data.name << ", "
                  << "DOB: " << current->data.dob << ", " << "Gender: " << current->data.gender << endl;
@@ -100,25 +98,27 @@ public:
             delete temp;
         }
     }
-
 };
 
-//Linked list to store doctors
+// Linked list to store doctors
 class DoctorsLL {
 private:
     Node<Doctor> *head;
+
 public:
     DoctorsLL() : head(nullptr) {}
 
-    //find doctor by id
+    // find doctor by id
     bool findById(int doctor_id) {
         bool isFound = false;
         Node<Doctor> *current = head;
         while (current != nullptr) {
-            //patient id already exists
+            // patient id already exists
             if (current->data.doctor_id == doctor_id) {
                 return true;
             }
+
+            current = current->next;
         }
         return isFound;
     }
@@ -129,15 +129,15 @@ public:
             cout << "Doctor with that id already exists" << endl;
             return;
         }
-        //create a new node containing the patient
+        // create a new node containing the patient
         Node<Doctor> *newDoctor = new Node<Doctor>(doctor);
 
-        //check if DoctorsLL is empty and make the newDoctor the head
+        // check if DoctorsLL is empty and make the newDoctor the head
         if (head == nullptr) {
             head = newDoctor;
         } else {
             Node<Doctor> *current = head;
-            //move the patient to the end of the linked list
+            // move the patient to the end of the linked list
             while (current->next != nullptr) {
                 current = current->next;
             }
@@ -149,7 +149,7 @@ public:
     void displayDoctors() {
         Node<Doctor> *current = head;
 
-        //loop over the elements in the linked list
+        // loop over the elements in the linked list
         while (current != nullptr) {
             cout << "Doctor ID: " << current->data.doctor_id << ", " << "Name: " << current->data.name << ", "
                  << " Specialization: " << current->data.specialization << endl;
@@ -167,22 +167,24 @@ public:
     }
 };
 
-//Linked list to store appointments
+// Linked list to store appointments
 class AppointmentsLL {
 private:
     Node<Appointment> *head;
+
 public:
     AppointmentsLL() : head(nullptr) {}
 
-    //find appointment by id
+    // find appointment by id
     bool findById(int appointment_id) {
         bool isFound = false;
         Node<Appointment> *current = head;
         while (current != nullptr) {
-            //patient id already exists
+            // patient id already exists
             if (current->data.appointment_id == appointment_id) {
                 return true;
             }
+            current = current->next;
         }
         return isFound;
     }
@@ -195,15 +197,15 @@ public:
             return;
         }
 
-        //create a new node containing the patient
+        // create a new node containing the patient
         Node<Appointment> *newAppointment = new Node<Appointment>(appointment);
 
-        //check if AppointmentsLL is empty and make the newAppointment the head
+        // check if AppointmentsLL is empty and make the newAppointment the head
         if (head == nullptr) {
             head = newAppointment;
         } else {
             Node<Appointment> *current = head;
-            //move appointment to the end of the linked list
+            // move appointment to the end of the linked list
             while (current->next != nullptr) {
                 current = current->next;
             }
@@ -215,7 +217,7 @@ public:
     void displayAppointments() {
         Node<Appointment> *current = head;
 
-        //loop over the elements in the linked list
+        // loop over the elements in the linked list
         while (current != nullptr) {
             cout << "Appointment ID: " << current->data.appointment_id << ", " << "Patient ID: "
                  << current->data.patient_id << ", "
@@ -234,9 +236,8 @@ public:
     }
 };
 
-
 int main() {
-    //variables
+    // variables
     int choice;
     PatientsLL patientsList;
     DoctorsLL doctorsList;
@@ -267,12 +268,11 @@ int main() {
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
 
-
         if (choice == 1) {
             int patient_id;
             string patient_name, dob, gender;
 
-            //receive patients data
+            // receive patients data
             cout << "PATIENT REGISTRATION" << endl;
             cout << "------------------------" << endl;
 
@@ -284,8 +284,8 @@ int main() {
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
             }
             cin.ignore();
-            
-            //check if a patient with that id already exists
+
+            // check if a patient with that id already exists
             if (patientsList.findById(patient_id)) {
                 cout << "Patient with that id already exists!" << endl;
                 goto ask_p_id;
@@ -301,7 +301,7 @@ int main() {
             // create a patient object with the given data
             Patient patient = {patient_id, patient_name, dob, gender};
 
-            //add to patients list
+            // add to patients list
             patientsList.addPatient(patient);
         } else if (choice == 2) {
             int doctor_id;
@@ -319,7 +319,7 @@ int main() {
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
             }
             cin.ignore();
-            //check if doctor with that id already exists
+            // check if doctor with that id already exists
             if (doctorsList.findById(doctor_id)) {
                 cout << "Doctor with that id already exists" << endl;
                 goto ask_id;
@@ -331,7 +331,6 @@ int main() {
 
             Doctor doctor = {doctor_id, name, specialization};
             doctorsList.addDoctor(doctor);
-
         } else if (choice == 3) {
             int appointment_id, patient_id, doctor_id;
             string appointment_date;
@@ -347,13 +346,13 @@ int main() {
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
             }
             cin.ignore();
-            // check if appointment with that id already exists
+//             check if appointment with that id already exists
             if (appointmentsList.findById(appointment_id)) {
                 cout << "Appointment with that id already exists" << endl;
                 goto ask_appointment_id;
             }
 
-            //patient id
+            // patient id
             ask_patient_id:
             cout << "P_ID: ";
             while (!(cin >> patient_id)) {
@@ -362,7 +361,7 @@ int main() {
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
             }
             cin.ignore();
-            //find if the patient with that id exists
+            // find if the patient with that id exists
             if (!patientsList.findById(patient_id)) {
                 cout << "Patient with that id doesn't exist!" << endl;
                 goto ask_patient_id;
