@@ -1,5 +1,6 @@
 #include <iostream>
 #include <limits>
+#include <regex>
 
 using namespace std;
 
@@ -236,6 +237,40 @@ public:
     }
 };
 
+// validate name
+// regex pattern to validate name with spaces, hyphens, apostrophes, commas and dots
+// it should start with a letter and end with a letter
+// it should not contain numbers
+bool isValidName(const std::string& name) {
+    std::regex namePattern("^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$");
+    return std::regex_match(name, namePattern);
+}
+
+// validate specialization
+// regex pattern to validate specialization with spaces, hyphens, apostrophes, commas and dots
+// it should start with a letter and end with a letter
+// it should not contain numbers
+bool isValidSpecialization(const std::string& specialization) {
+    std::regex specPattern("^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$");
+    return std::regex_match(specialization, specPattern);
+}
+
+
+// validate dob
+// regex pattern to validate date of birth in the format dd/mm/yyyy
+// it should be 2 digits for day, 2 digits for month and 4 digits for year
+bool isValidDOB(const std::string& dob) {
+    std::regex dobPattern("^\\d{2}\\/\\d{2}\\/\\d{4}$");
+    return std::regex_match(dob, dobPattern);
+}
+
+
+// validate gender
+bool isValidGender(const std::string& gender) {
+    return gender == "Male" || gender == "Female" || gender == "Other";
+}
+
+
 int main() {
     // variables
     int choice;
@@ -294,23 +329,23 @@ int main() {
             ask_p_name:
             cout << "NAME: ";
             getline(cin, patient_name);
-            if (patient_name.empty()) {
+            if (patient_name.empty() || !isValidName(patient_name)) {
                 cout << "please enter a valid name" << endl;
                 goto ask_p_name;
             }
             ask_p_dob:
             cout << "DoB: ";
             getline(cin, dob);
-            if (dob.empty()) {
-                cout << "Enter a valid dob" << endl;
+            if (dob.empty() || !isValidDOB(dob)) {
+                cout << "Enter a valid dob (dd/mm/yyyy)" << endl;
                 goto ask_p_dob;
             }
 
             ask_p_gender:
             cout << "GENDER: ";
             getline(cin, gender);
-            if (gender.empty()) {
-                cout << "Enter a valid gender" << endl;
+            if (gender.empty() || !isValidGender(gender)) {
+                cout << "Enter a valid gender ('Male' or 'Female' or 'Other')" << endl;
                 goto ask_p_gender;
             }
             // create a patient object with the given data
@@ -342,14 +377,14 @@ int main() {
             ask_d_name:
             cout << "NAME: ";
             getline(cin, name);
-            if (name.empty()) {
+            if (name.empty() || !isValidName(name)) {
                 cout << "Please enter a valid name " << endl;
                 goto ask_d_name;
             }
             ask_specialization:
             cout << "SPECIALIZATION: ";
             getline(cin, specialization);
-            if (specialization.empty()) {
+            if (specialization.empty() ||!isValidSpecialization(specialization)) {
                 cout << "Enter a valid specialization" << endl;
                 goto ask_specialization;
             }
